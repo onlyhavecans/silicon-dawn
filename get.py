@@ -13,16 +13,27 @@ CARDS_URL = "http://egypt.urnash.com/media/blogs.dir/1/files/2018/01/The-Tarot-o
 ZIP_FILE = "The-Tarot-of-the-Silicon-Dawn.zip"
 
 
-def main():
-    if not Path(ZIP_FILE).exists() and ZipFile(ZIP_FILE).testzip() is None:
-        zip_data = requests.get(CARDS_URL)
-        with open(ZIP_FILE, 'wb') as zip_file:
-            zip_file.write(zip_data.content)
+def write_zip_from_url(url, filename):
+    zip_data = requests.get(url)
+    with open(filename, 'wb') as zip_file:
+        zip_file.write(zip_data.content)
 
-    with ZipFile(ZIP_FILE) as zip_file:
+
+def extract_cards(zipfile):
+    with ZipFile(zipfile) as zip_file:
         for file in zip_file.filelist:
             if "_MACOSX" not in file.filename and "sand-home" not in file.filename:
                 zip_file.extract(file)
+
+
+def main():
+    if not Path(ZIP_FILE).exists():
+        write_zip_from_url(CARDS_URL, ZIP_FILE)
+
+    if ZipFile(ZIP_FILE).testzip() is not None:
+        print("The zipfile is incomplete or damaged. Delete it and re-run script")
+    else:
+        extract_cards(ZIP_FILE)
 
 
 if __name__ == '__main__':
