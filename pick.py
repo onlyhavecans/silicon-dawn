@@ -14,7 +14,7 @@ TEXT_ENDING = "-text.png"
 def main():
     tarot_path = Path(TAROT_FOLDER)
 
-    cards = [x for x in tarot_path.glob(CARD_GLOB) if "sand-home" not in x]
+    cards = [x for x in tarot_path.glob(CARD_GLOB) if "sand-home" not in x.stem]
 
     pick_front = random.choice(cards)
     pick_text = tarot_path.joinpath(f'{pick_front.stem}{TEXT_ENDING}')
