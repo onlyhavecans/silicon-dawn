@@ -21,10 +21,10 @@ def main():
 
     print(f'My pick is {pick_front.stem}')
 
-    card_img = Image.open(pick_front)
+    card_img = Image.open(str(pick_front))
     card_img.show()
 
-    text_img = Image.open(pick_text)
+    text_img = Image.open(str(pick_text))
     text_img.show()
 
 
