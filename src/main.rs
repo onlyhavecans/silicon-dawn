@@ -16,7 +16,7 @@ const STANDARD_PORT: u16 = 3000;
 pub struct SharedCardList;
 
 impl Key for SharedCardList {
-    type Value = Vec<String>;
+    type Value = Option<Vec<String>>;
 }
 
 
@@ -32,8 +32,10 @@ fn main() {
         }
     }
 
+    println!("Running on http://localhost:{}", port);
+
     Shio::default()
-        .manage::<SharedCardList>(cache_cards(CARD_DIRECTORY))
+        .manage::<SharedCardList>(get_all_jpgs(CARD_DIRECTORY))
         .route((Method::GET, "/", show_random_card))
         .route((Method::GET, format!("/{}/{{card_name}}", CARD_URI).as_str(), return_card))
         .run(format!(":{}", port))
@@ -43,25 +45,23 @@ fn main() {
 
 fn show_random_card(ctx: Context) -> Response {
     let mut rng = thread_rng();
-    let cards = ctx.shared().get::<SharedCardList>();
-    let pick = rng.choose(cards).unwrap();
+    let cached_cards = ctx.shared().get::<SharedCardList>();
 
-    Response::with(render_card_picks(pick))
-}
+    if let Some(cards) = cached_cards {
+        let pick = rng.choose(cards).unwrap();
 
-
-fn cache_cards(dir: &str) -> Vec<String> {
-    let path = Path::new(dir);
-    if let Some(cards) = list_all_jpgs(path) {
-        return cards;
+        Response::with(render_card_picks(pick))
+    } else {
+        status_500()
     }
-    eprintln!("There are no cards, meaning you haven't downloaded them.");
-    process::exit(5);
 }
 
 
-fn list_all_jpgs(dir: &Path) -> Option<Vec<String>> {
+fn get_all_jpgs(directory: &str) -> Option<Vec<String>> {
     let mut cards = Vec::new();
+    let dir = Path::new(directory);
+
+    println!("Caching card list, this takes a moment.");
 
     if dir.is_dir() {
         if let Ok(files) = fs::read_dir(dir) {
