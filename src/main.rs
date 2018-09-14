@@ -113,27 +113,21 @@ fn return_card(ctx: Context) -> Response {
 
     println!("Offering up {:?} on request.", full_path);
 
-    match File::open(full_path) {
-        Ok(mut f) => {
-            let mut buffer = Vec::new();
-            match f.read_to_end(&mut buffer) {
-                Ok(_) => {
-                    Response::build()
-                        .body(buffer)
-                        .into()
-                },
-                Err(_) => {
-                    Response::build()
-                        .status(StatusCode::InternalServerError)
-                        .body("Unable to read file")
-                        .into()
-                },
-            }
-        },
-        _ => {
+    if let Ok(mut f) = File::open(full_path) {
+        let mut buffer = Vec::new();
+        if let Ok(_) = f.read_to_end(&mut buffer) {
             Response::build()
-                .status(StatusCode::NotFound)
+                .body(buffer)
                 .into()
-        },
+        } else {
+            Response::build()
+                .status(StatusCode::InternalServerError)
+                .body("Unable to read file")
+                .into()
+        }
+    } else {
+        Response::build()
+            .status(StatusCode::NotFound)
+            .into()
     }
 }
