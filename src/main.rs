@@ -3,6 +3,7 @@ extern crate rand;
 
 use rand::prelude::*;
 use shio::prelude::*;
+use shio::context::Key;
 use std::fs::{self, File};
 use std::path::Path;
 use std::io::Read;
@@ -24,6 +25,8 @@ fn main() {
             process::exit(1);
         }
     }
+
+
     Shio::default()
         .route((Method::GET, "/", pick_card))
         .route((Method::GET, format!("/{}/{{card_name}}", CARD_URI).as_str(), return_card))
@@ -33,7 +36,7 @@ fn main() {
 
 
 fn pick_card(_: Context) -> Response {
-    if let Ok(cards) = list_all_jpgs(Path::new(CARD_DIRECTORY)) {
+    if let Some(cards) = list_all_jpgs(Path::new(CARD_DIRECTORY)) {
 
         let mut rng = thread_rng();
         let pick = rng.choose(&cards).unwrap();
@@ -45,7 +48,7 @@ fn pick_card(_: Context) -> Response {
 }
 
 
-fn list_all_jpgs(dir: &Path) -> Result<Vec<String>, &str> {
+fn list_all_jpgs(dir: &Path) -> Option<Vec<String>> {
     let mut cards = Vec::new();
 
     if dir.is_dir() {
@@ -62,10 +65,14 @@ fn list_all_jpgs(dir: &Path) -> Result<Vec<String>, &str> {
             }
         }
     } else {
-        return Err("Not a directory")
+        return None
     }
 
-    Ok(cards)
+    if cards.is_empty() {
+        return None
+    }
+
+    Some(cards)
 }
 
 
