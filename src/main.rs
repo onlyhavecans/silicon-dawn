@@ -47,6 +47,8 @@ fn show_random_card(ctx: Context) -> Response {
     let mut rng = thread_rng();
     let cached_cards = ctx.shared().get::<SharedCardList>();
 
+    println!("Pulling a card on request.");
+
     if let Some(pick) = rng.choose(cached_cards) {
         Response::with(render_card_picks(pick))
     } else {
@@ -108,6 +110,8 @@ fn return_card(ctx: Context) -> Response {
     let directory_path = Path::new(CARD_DIRECTORY);
     let file_name = &ctx.get::<Parameters>()["card_name"];
     let full_path = directory_path.join(file_name);
+
+    println!("Offering up {:?} on request.", full_path);
 
     match File::open(full_path) {
         Ok(mut f) => {
