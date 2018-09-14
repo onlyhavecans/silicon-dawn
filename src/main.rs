@@ -123,9 +123,11 @@ fn return_card(ctx: Context) -> Response {
     }
 }
 
+
 fn status_404() -> Response {
     Response::build().status(StatusCode::NotFound).into()
 }
+
 
 fn status_500() -> Response {
     Response::build().status(StatusCode::InternalServerError).into()
