@@ -1,0 +1,8 @@
+[package]
+name = "silicon-dawn"
+version = "0.1.0"
+authors = ["Amy Aronsohn <WagThatTail@Me.com>"]
+
+[dependencies]
+shio = "0.3"
+rand = "0.5"
