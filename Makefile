@@ -8,3 +8,4 @@ setup: The\ Tarot\ of\ the\ Silicon\ Dawn
 
 web:
 	cargo run --release
+DUMMY: web
