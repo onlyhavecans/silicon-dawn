@@ -51,13 +51,14 @@ But does it require writing an LoC comparible to Apache Tomcat's just to make so
 Now I'm just venting angry noises becasue I'm hangry.
 I started this after lunch and now it's super late.
 The only advantage is that somehow I can't seem to get a directory traversal exploit on it.
-I'm sure it's possible but for some reason I could get down a directory.
+I'm sure it's possible but for some reason I could not get down a directory easily even with a few encoding tricks.
 So... plus one big fat question mark?
 Either way it's written, and my regrets are on display.
 So I hope you enjoy it.
 My Pain.
 
 1. [install rust](https://doc.rust-lang.org/1.29.0/cargo/getting-started/installation.html)
+1. `make setup` to get the cards
 1. `make web` to run the daemon
-1. browse to http://localhost:3000 to enjoy your pick
+1. Browse to http://localhost:3000 to enjoy your pick
 1. Refresh the page for a fresh pick
