@@ -13,6 +13,12 @@ const CARD_DIRECTORY: &str = "The Tarot of the Silicon Dawn";
 const CARD_URI: &str = "cards";
 const STANDARD_PORT: u16 = 3000;
 
+pub struct SharedCardList;
+
+impl Key for SharedCardList {
+    type Value = Vec<String>;
+}
+
 
 fn main() {
     let mut port: u16 = STANDARD_PORT;
@@ -26,25 +32,31 @@ fn main() {
         }
     }
 
-
     Shio::default()
-        .route((Method::GET, "/", pick_card))
+        .manage::<SharedCardList>(cache_cards(CARD_DIRECTORY))
+        .route((Method::GET, "/", show_random_card))
         .route((Method::GET, format!("/{}/{{card_name}}", CARD_URI).as_str(), return_card))
         .run(format!(":{}", port))
         .unwrap();
 }
 
 
-fn pick_card(_: Context) -> Response {
-    if let Some(cards) = list_all_jpgs(Path::new(CARD_DIRECTORY)) {
+fn show_random_card(ctx: Context) -> Response {
+    let mut rng = thread_rng();
+    let cards = ctx.shared().get::<SharedCardList>();
+    let pick = rng.choose(cards).unwrap();
 
-        let mut rng = thread_rng();
-        let pick = rng.choose(&cards).unwrap();
+    Response::with(render_card_picks(pick))
+}
 
-        Response::with(render_card_picks(pick))
-    } else {
-        status_500()
+
+fn cache_cards(dir: &str) -> Vec<String> {
+    let path = Path::new(dir);
+    if let Some(cards) = list_all_jpgs(path) {
+        return cards;
     }
+    eprintln!("There are no cards, meaning you haven't downloaded them.");
+    process::exit(5);
 }
 
 
