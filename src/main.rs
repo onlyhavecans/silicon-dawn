@@ -70,8 +70,7 @@ fn list_all_jpgs(dir: &Path) -> Result<Vec<String>, &str> {
 
 
 fn render_card_picks(card_name: &str) -> String {
-    let card_base = card_name.replace(".jpg","");
-    let card_text = format!("{}-text.png", card_base);
+    let card_text = card_name.replace(".jpg", "-text.png");
 
     format!("<html><body bgcolor=#000000><img src={uri}/{card} alt={card} /><br /><img src={uri}/{text} alt={text} /></body></html>", uri = CARD_URI, card =  card_name, text = card_text)
 }
