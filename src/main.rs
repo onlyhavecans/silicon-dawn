@@ -1,6 +1,11 @@
 extern crate shio;
 extern crate rand;
 
+#[macro_use]
+extern crate horrorshow;
+
+use horrorshow::prelude::Raw;
+use horrorshow::helper::doctype;
 use rand::prelude::*;
 use shio::prelude::*;
 use shio::context::Key;
@@ -43,23 +48,6 @@ fn main() {
 }
 
 
-fn show_random_card(ctx: Context) -> Response {
-    let mut rng = thread_rng();
-    let cached_cards = ctx.shared().get::<SharedCardList>();
-
-    println!("Pulling a card on request.");
-
-    if let Some(pick) = rng.choose(cached_cards) {
-        Response::with(render_card_picks(pick))
-    } else {
-        Response::build()
-            .status(StatusCode::InternalServerError)
-            .body("No rng. Hail Eris")
-            .into()
-    }
-}
-
-
 fn get_all_jpgs(directory: &str) -> Vec<String> {
     let mut cards = Vec::new();
     let dir = Path::new(directory);
@@ -99,10 +87,49 @@ fn get_all_jpgs(directory: &str) -> Vec<String> {
 }
 
 
-fn render_card_picks(card_name: &str) -> String {
-    let card_text = card_name.replace(".jpg", "-text.png");
+fn show_random_card(ctx: Context) -> Response {
+    let mut rng = thread_rng();
+    let cached_cards = ctx.shared().get::<SharedCardList>();
 
-    format!("<html><body bgcolor=#000000><img src={uri}/{card} alt={card} /><br /><img src={uri}/{text} alt={text} /></body></html>", uri = CARD_URI, card =  card_name, text = card_text)
+    println!("Pulling a card on request.");
+
+    if let Some(pick) = rng.choose(cached_cards) {
+        Response::with(render_card_picks(pick))
+    } else {
+        Response::build()
+            .status(StatusCode::InternalServerError)
+            .body("No rng. Hail Eris")
+            .into()
+    }
+}
+
+
+fn render_card_picks(card_name: &str) -> String {
+    let card_text = &card_name.replace(".jpg", "-text.png");
+
+    format!("{}", html!{
+        : doctype::HTML;
+        html {
+            head {
+                title : "Tarot of the Silicon Dawn";
+                style(TYPE="text/css") : Raw("body{background: black;color:dimgrey}");
+            }
+            body(bgcolor="#000000") {
+                center {
+                    img(src=format!("{}/{}", CARD_URI, card_name), alt=card_name);
+                    br;
+                    img(src=format!("{}/{}", CARD_URI, card_text), alt=card_text);
+                    br;
+                    p {
+                        : Raw("Everything is &copy Egypt Urnash http://egypt.urnash.com/tarot/")
+                    }
+                    p {
+                        : Raw("Code can be found at https://onlyhavecans.works/amy/silicon-dawn")
+                    }
+                }
+            }
+        }
+    })
 }
 
 

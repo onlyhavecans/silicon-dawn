@@ -6,3 +6,4 @@ authors = ["Amy Aronsohn <WagThatTail@Me.com>"]
 [dependencies]
 shio = "0.3"
 rand = "0.5"
+horrorshow = "0.6"
