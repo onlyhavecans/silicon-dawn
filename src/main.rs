@@ -68,7 +68,10 @@ fn get_all_jpgs(directory: &str) -> Vec<String> {
                     let path = entry.path();
                     if let Some(file_type) = path.extension() {
                         if file_type == "jpg" {
-                            cards.push(format!("{}", entry.file_name().to_str().unwrap()));
+                            let card_name = entry.file_name().into_string();
+                            if let Ok(no_really_now_the_name) = card_name {
+                                cards.push(no_really_now_the_name);
+                            }
                         }
                     }
                 }
@@ -86,7 +89,7 @@ fn get_all_jpgs(directory: &str) -> Vec<String> {
         process::exit(5);
     }
 
-    println!("Successfully pulled card list");
+    println!("Successfully pulled {} cards into the cache.", cards.len());
     cards
 }
 
