@@ -50,7 +50,10 @@ fn show_random_card(ctx: Context) -> Response {
     if let Some(pick) = rng.choose(cached_cards) {
         Response::with(render_card_picks(pick))
     } else {
-        status_500()
+        Response::build()
+            .status(StatusCode::InternalServerError)
+            .body("No rng. Hail Eris")
+            .into()
     }
 }
 
@@ -111,27 +114,22 @@ fn return_card(ctx: Context) -> Response {
             let mut buffer = Vec::new();
             match f.read_to_end(&mut buffer) {
                 Ok(_) => {
-                    return Response::build()
+                    Response::build()
                         .body(buffer)
-                        .into();
+                        .into()
                 },
                 Err(_) => {
-                    return status_500();
+                    Response::build()
+                        .status(StatusCode::InternalServerError)
+                        .body("Unable to read file")
+                        .into()
                 },
-            };
+            }
         },
         _ => {
-            return status_404();
+            Response::build()
+                .status(StatusCode::NotFound)
+                .into()
         },
     }
-}
-
-
-fn status_404() -> Response {
-    Response::build().status(StatusCode::NotFound).into()
-}
-
-
-fn status_500() -> Response {
-    Response::build().status(StatusCode::InternalServerError).into()
 }
