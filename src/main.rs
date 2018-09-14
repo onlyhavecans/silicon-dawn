@@ -16,7 +16,7 @@ const STANDARD_PORT: u16 = 3000;
 pub struct SharedCardList;
 
 impl Key for SharedCardList {
-    type Value = Option<Vec<String>>;
+    type Value = Vec<String>;
 }
 
 
@@ -47,9 +47,7 @@ fn show_random_card(ctx: Context) -> Response {
     let mut rng = thread_rng();
     let cached_cards = ctx.shared().get::<SharedCardList>();
 
-    if let Some(cards) = cached_cards {
-        let pick = rng.choose(cards).unwrap();
-
+    if let Some(pick) = rng.choose(cached_cards) {
         Response::with(render_card_picks(pick))
     } else {
         status_500()
@@ -57,7 +55,7 @@ fn show_random_card(ctx: Context) -> Response {
 }
 
 
-fn get_all_jpgs(directory: &str) -> Option<Vec<String>> {
+fn get_all_jpgs(directory: &str) -> Vec<String> {
     let mut cards = Vec::new();
     let dir = Path::new(directory);
 
@@ -77,14 +75,19 @@ fn get_all_jpgs(directory: &str) -> Option<Vec<String>> {
             }
         }
     } else {
-        return None
+        eprintln!("The expected tarot folder {:?} is missing.", dir);
+        eprintln!("Shutting Down.");
+        process::exit(4);
     }
 
     if cards.is_empty() {
-        return None
+        eprintln!("I didn't find any of the tarot jpg files in the {:?} directory.", dir);
+        eprintln!("Shutting Down.");
+        process::exit(5);
     }
 
-    Some(cards)
+    println!("Successfully pulled card list");
+    cards
 }
 
 
