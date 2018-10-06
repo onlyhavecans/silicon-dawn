@@ -108,7 +108,6 @@ fn show_random_card(ctx: Context) -> Response {
 
 fn render_card_picks(card_name: &str) -> String {
     let card_text = &card_name.replace(".jpg", "-text.png");
-
     format!(
         "{}",
         html!{
