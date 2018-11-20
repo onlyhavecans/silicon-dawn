@@ -6,7 +6,8 @@ extern crate horrorshow;
 
 use horrorshow::helper::doctype;
 use horrorshow::prelude::Raw;
-use rand::prelude::*;
+use rand::seq::SliceRandom;
+use rand::thread_rng;
 use shio::context::Key;
 use shio::prelude::*;
 use std::fs::{self, File};
@@ -96,7 +97,7 @@ fn show_random_card(ctx: Context) -> Response {
 
     println!("Pulling a card on request.");
 
-    if let Some(pick) = rng.choose(cached_cards) {
+    if let Some(pick) = cached_cards.choose(&mut rng) {
         Response::with(render_card_picks(pick))
     } else {
         Response::build()
