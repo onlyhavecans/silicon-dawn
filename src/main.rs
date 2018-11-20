@@ -1,10 +1,10 @@
+extern crate horrorshow;
 extern crate rand;
 extern crate shio;
 
-#[macro_use]
-extern crate horrorshow;
-
+use horrorshow::append_html;
 use horrorshow::helper::doctype;
+use horrorshow::html;
 use horrorshow::prelude::Raw;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
