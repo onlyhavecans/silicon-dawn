@@ -17,7 +17,7 @@ use std::{env, process};
 
 const CARD_DIRECTORY: &str = "The Tarot of the Silicon Dawn";
 const CARD_URI: &str = "cards";
-const STANDARD_PORT: u16 = 3000;
+const STANDARD_PORT: u16 = 3200;
 
 pub struct SharedCardList;
 
@@ -46,7 +46,8 @@ fn main() {
             Method::GET,
             format!("/{}/{{card_name}}", CARD_URI).as_str(),
             return_card,
-        )).run(format!(":{}", port))
+        ))
+        .run(format!(":{}", port))
         .unwrap();
 }
 
@@ -111,7 +112,7 @@ fn render_card_picks(card_name: &str) -> String {
     let card_text = &card_name.replace(".jpg", "-text.png");
     format!(
         "{}",
-        html!{
+        html! {
             : doctype::HTML;
             html {
                 head {
