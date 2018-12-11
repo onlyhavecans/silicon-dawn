@@ -117,7 +117,7 @@ fn render_card_picks(card_name: &str) -> String {
             html {
                 head {
                     title : "Tarot of the Silicon Dawn";
-                    style(TYPE="text/css") : Raw("body{background: black;color:dimgrey}");
+                    style(TYPE="text/css") : Raw("body{background: black;color: dimgrey}");
                 }
                 body(bgcolor="#000000") {
                     center {
@@ -126,10 +126,12 @@ fn render_card_picks(card_name: &str) -> String {
                         img(src=format!("{}/{}", CARD_URI, card_text), alt=card_text);
                         br;
                         p {
-                            : Raw("Everything is &copy Egypt Urnash http://egypt.urnash.com/tarot/")
+                            : Raw("Everything is &copy Egypt Urnash. For more information please see ");
+                            a(href="http://egypt.urnash.com/tarot/") : Raw("the Silicon Dawn Official Website.")
                         }
                         p {
-                            : Raw("Code can be found at https://onlyhavecans.works/amy/silicon-dawn")
+                            : "Code for this page can be found at ";
+                            a(href="https://onlyhavecans.works/amy/silicon-dawn") : "my personal repository."
                         }
                     }
                 }
