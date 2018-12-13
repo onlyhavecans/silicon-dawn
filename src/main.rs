@@ -126,8 +126,8 @@ fn render_card_picks(card_name: &str) -> String {
                         img(src=format!("{}/{}", CARD_URI, card_text), alt=card_text);
                         br;
                         p {
-                            : Raw("Everything is &copy Egypt Urnash. For more information please see ");
-                            a(href="http://egypt.urnash.com/tarot/") : Raw("the Silicon Dawn Official Website.")
+                            : "Everything is © Egypt Urnash. For more information please see ";
+                            a(href="http://egypt.urnash.com/tarot/") : "the Silicon Dawn Official Website."
                         }
                         p {
                             : "Code for this page can be found at ";
