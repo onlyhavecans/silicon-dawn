@@ -15,7 +15,7 @@ use std::io::Read;
 use std::path::Path;
 use std::{env, process};
 
-const CARD_DIRECTORY: &str = "The Tarot of the Silicon Dawn";
+const CARD_DIRECTORY: &str = "The-Tarot-of-the-Silicon-Dawn";
 const CARD_URI: &str = "cards";
 const STANDARD_PORT: u16 = 3200;
 
