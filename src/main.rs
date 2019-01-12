@@ -63,7 +63,6 @@ fn get_all_jpgs(directory: &str) -> Vec<String> {
 fn draw_card(state: State<SharedCardList>) -> Result<Template, Status> {
     let mut rng = thread_rng();
 
-    println!("Pulling a card on request.");
     if let Some(pick) = state.cards.choose(&mut rng) {
         let card_text = &pick.replace(".jpg", "-text.png");
         let mut context = HashMap::new();
