@@ -2,9 +2,7 @@
 
 I made this so I can pull random cards on my phone and review the text.
 
-I also want to make a card reference out of this as well.
-
-I originally designed this for use in [Pythonista](http://omz-software.com/pythonista/) but I rewrote it in rust to just be a web app
+There is also a [nightly rust version branch](https://onlyhavecans.works/amy/silicon-dawn/src/branch/nightly) of this I am testing out with [rocket](https://rocket.rs/) and [handlebars](http://handlebarsjs.com/)
 
 ## Instructions
 
