@@ -69,7 +69,6 @@ fn draw_card(state: State<SharedCardList>) -> Result<Template, Status> {
         context.insert("card_dir", CARD_URI);
         context.insert("card_name", pick);
         context.insert("card_text", card_text);
-
         Ok(Template::render("index", &context))
     } else {
         Err(Status::InternalServerError)
@@ -87,6 +86,5 @@ fn main() {
     let config = SharedCardList {
         cards: get_all_jpgs(CARD_DIRECTORY),
     };
-
     rocket().manage(config).launch();
 }
