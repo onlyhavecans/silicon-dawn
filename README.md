@@ -10,6 +10,7 @@ Pythonista isn't the BEST experiance I found, so I wrote a web daemon you can co
 Becasue everything is best as a web page (?question mark?)
 
 1. [install rust](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+1. `rustup install nightly` to install nightly builds (needed for Rocket)
 1. `make` to run the dev daemon
 1. Browse to http://localhost:3300 to enjoy your pick
 1. Refresh the page for a fresh pick
