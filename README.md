@@ -15,3 +15,8 @@ Becasue everything is best as a web page (?question mark?)
 1. Refresh the page for a fresh pick
 
 Or! if you are super lazy check out [my hosted copy of this](https://silicon-dawn.cards).
+
+## Notes
+This supports a `.env` file you can use to set shell style environement variables. This is great for testing things you may want to set in your deploy environement without the need for direnv
+
+See [rocket's documentation](https://rocket.rs/guide/configuration/#environment-variables) for more details

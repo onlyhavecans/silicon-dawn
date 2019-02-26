@@ -5,6 +5,7 @@ authors = ["Amy Aronsohn <WagThatTail@Me.com>"]
 edition = "2018"
 
 [dependencies]
+dotenv = "0.13"
 rand = "0.6"
 rocket = "0.4"
 
