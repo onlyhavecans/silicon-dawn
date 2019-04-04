@@ -1,54 +1,21 @@
-extern crate horrorshow;
-extern crate rand;
-extern crate shio;
+#![feature(proc_macro_hygiene, decl_macro)]
 
-use horrorshow::append_html;
-use horrorshow::helper::doctype;
-use horrorshow::html;
-use horrorshow::prelude::Raw;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
-use shio::context::Key;
-use shio::prelude::*;
-use std::fs::{self, File};
-use std::io::Read;
+use rocket::http::Status;
+use rocket::{get, routes, State};
+use rocket_contrib::serve::StaticFiles;
+use rocket_contrib::templates::Template;
+use std::collections::HashMap;
+use std::fs;
 use std::path::Path;
-use std::{env, process};
+use std::process;
 
 const CARD_DIRECTORY: &str = "The-Tarot-of-the-Silicon-Dawn";
-const CARD_URI: &str = "cards";
-const STANDARD_PORT: u16 = 3200;
+const CARD_URI: &str = "/cards";
 
-pub struct SharedCardList;
-
-impl Key for SharedCardList {
-    type Value = Vec<String>;
-}
-
-fn main() {
-    let mut port: u16 = STANDARD_PORT;
-
-    if let Some(arg1) = env::args().nth(1) {
-        if let Ok(new_port) = arg1.parse::<u16>() {
-            port = new_port;
-        } else {
-            eprintln!("Usage: silicon-dawn <port>");
-            process::exit(1);
-        }
-    }
-
-    println!("Running on http://localhost:{}", port);
-
-    Shio::default()
-        .manage::<SharedCardList>(get_all_jpgs(CARD_DIRECTORY))
-        .route((Method::GET, "/", show_random_card))
-        .route((
-            Method::GET,
-            format!("/{}/{{card_name}}", CARD_URI).as_str(),
-            return_card,
-        ))
-        .run(format!(":{}", port))
-        .unwrap();
+struct SharedCardList {
+    cards: Vec<String>,
 }
 
 fn get_all_jpgs(directory: &str) -> Vec<String> {
@@ -92,72 +59,32 @@ fn get_all_jpgs(directory: &str) -> Vec<String> {
     cards
 }
 
-fn show_random_card(ctx: Context) -> Response {
+#[get("/")]
+fn draw_card(state: State<SharedCardList>) -> Result<Template, Status> {
     let mut rng = thread_rng();
-    let cached_cards = ctx.shared().get::<SharedCardList>();
 
-    println!("Pulling a card on request.");
-
-    if let Some(pick) = cached_cards.choose(&mut rng) {
-        Response::with(render_card_picks(pick))
+    if let Some(pick) = state.cards.choose(&mut rng) {
+        let card_text = &pick.replace(".jpg", "-text.png");
+        let mut context = HashMap::new();
+        context.insert("card_dir", CARD_URI);
+        context.insert("card_name", pick);
+        context.insert("card_text", card_text);
+        Ok(Template::render("index", &context))
     } else {
-        Response::build()
-            .status(StatusCode::InternalServerError)
-            .body("No rng. Hail Eris")
-            .into()
+        Err(Status::InternalServerError)
     }
 }
 
-fn render_card_picks(card_name: &str) -> String {
-    let card_text = &card_name.replace(".jpg", "-text.png");
-    format!(
-        "{}",
-        html! {
-            : doctype::HTML;
-            html {
-                head {
-                    title : "Tarot of the Silicon Dawn";
-                    style(TYPE="text/css") : Raw("body{background: black;color: dimgrey}");
-                }
-                body(bgcolor="#000000") {
-                    center {
-                        img(src=format!("{}/{}", CARD_URI, card_name), alt=card_name);
-                        br;
-                        img(src=format!("{}/{}", CARD_URI, card_text), alt=card_text);
-                        br;
-                        p {
-                            : "Everything is © Egypt Urnash. For more information please see ";
-                            a(href="http://egypt.urnash.com/tarot/") : "the Silicon Dawn Official Website."
-                        }
-                        p {
-                            : "Code for this page can be found at ";
-                            a(href="https://onlyhavecans.works/amy/silicon-dawn") : "my personal repository."
-                        }
-                    }
-                }
-            }
-        }
-    )
+fn rocket() -> rocket::Rocket {
+    rocket::ignite()
+        .mount("/", routes![draw_card])
+        .mount(CARD_URI, StaticFiles::from(CARD_DIRECTORY))
+        .attach(Template::fairing())
 }
 
-fn return_card(ctx: Context) -> Response {
-    let directory_path = Path::new(CARD_DIRECTORY);
-    let file_name = &ctx.get::<Parameters>()["card_name"];
-    let full_path = directory_path.join(file_name);
-
-    println!("Offering up {:?} on request.", full_path);
-
-    if let Ok(mut f) = File::open(full_path) {
-        let mut buffer = Vec::new();
-        if let Ok(_) = f.read_to_end(&mut buffer) {
-            Response::build().body(buffer).into()
-        } else {
-            Response::build()
-                .status(StatusCode::InternalServerError)
-                .body("Unable to read file")
-                .into()
-        }
-    } else {
-        Response::build().status(StatusCode::NotFound).into()
-    }
+fn main() {
+    let config = SharedCardList {
+        cards: get_all_jpgs(CARD_DIRECTORY),
+    };
+    rocket().manage(config).launch();
 }

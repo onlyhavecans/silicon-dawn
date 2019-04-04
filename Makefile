@@ -1,9 +1,17 @@
 CARDS := The-Tarot-of-the-Silicon-Dawn
 DAWNZIP := The-Tarot-of-the-Silicon-Dawn.zip
 
-web: $(CARDS)
-	cargo run --release
-DUMMY: web
+run: $(CARDS)
+	cargo +nightly build
+	cargo +nightly run
+DUMMY: run
+
+prod: build
+	cargo +nightly run --release
+DUMMY: prod
+
+build: $(CARDS)
+	cargo +nightly build --release
 
 setup: $(CARDS)
 DUMMY: setup

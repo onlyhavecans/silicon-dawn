@@ -1,10 +1,14 @@
 [package]
 name = "silicon-dawn"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Amy Aronsohn <WagThatTail@Me.com>"]
 edition = "2018"
 
 [dependencies]
-shio = "0.3"
 rand = "0.6"
-horrorshow = "0.6"
+rocket = "0.4"
+
+[dependencies.rocket_contrib]
+version = "0.4"
+default-features = false
+features = ["handlebars_templates", "serve"]
