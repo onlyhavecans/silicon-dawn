@@ -1,6 +1,5 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
-use dotenv;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 use rocket::http::Status;
@@ -84,7 +83,6 @@ fn rocket() -> rocket::Rocket {
 }
 
 fn main() {
-    dotenv::dotenv().ok();
     let config = SharedCardList {
         cards: get_all_jpgs(CARD_DIRECTORY),
     };
