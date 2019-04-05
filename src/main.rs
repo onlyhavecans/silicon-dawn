@@ -75,10 +75,16 @@ fn draw_card(state: State<SharedCardList>) -> Result<Template, Status> {
     }
 }
 
+#[get("/")]
+fn robots_txt() -> &'static str {
+    "User-agent: *\nDisallow: /"
+}
+
 fn rocket() -> rocket::Rocket {
     rocket::ignite()
         .mount("/", routes![draw_card])
         .mount(CARD_URI, StaticFiles::from(CARD_DIRECTORY))
+        .mount("/robots.txt", routes![robots_txt])
         .attach(Template::fairing())
 }
 
