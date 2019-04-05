@@ -770,7 +770,7 @@ dependencies = [
 
 [[package]]
 name = "silicon-dawn"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "rocket 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -1,6 +1,6 @@
 [package]
 name = "silicon-dawn"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Amy Aronsohn <WagThatTail@Me.com>"]
 edition = "2018"
 
