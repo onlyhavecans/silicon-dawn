@@ -24,5 +24,5 @@ $(CARDS): $(DAWNZIP)
 	mv -f "The Tarot of the Silicon Dawn" $(CARDS)
 
 clean:
-	@rm -rf $(DAWNDIR) $(DAWNZIP)
+	@rm -rf $(DAWNDIR) $(CARDS)
 DUMMY: clean
