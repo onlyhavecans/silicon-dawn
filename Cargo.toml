@@ -1,11 +1,11 @@
 [package]
 name = "silicon-dawn"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Amelia Aronsohn <WagThatTail@Me.com>"]
 edition = "2018"
 
 [dependencies]
-rand = "0.6"
+rand = "0.7"
 rocket = "0.4"
 
 [dependencies.rocket_contrib]
