@@ -6,10 +6,6 @@ run: $(CARDS)
 	cargo +nightly run
 DUMMY: run
 
-prod: build
-	cargo +nightly run --release
-DUMMY: prod
-
 build: $(CARDS)
 	cargo +nightly build --release
 
