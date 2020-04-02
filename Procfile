@@ -1,1 +1,1 @@
-web: cargo +nightly run --release
+web: ./target/release/silicon-dawn
