@@ -1,5 +1,8 @@
 # Silicon Dawn
 
+**Archived Repo**
+I am not longer maintaining this and switched to using https://onlyhavecans.works/amy/silicondawn
+
 I made this so I can pull random cards on my phone and review the text.
 
 I originally designed this for use in [Pythonista](http://omz-software.com/pythonista/) but I rewrote it in rust to be a web app.
