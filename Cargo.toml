@@ -1,14 +1,19 @@
 [package]
 name = "silicon-dawn"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Amelia Aronsohn <WagThatTail@Me.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
-rand = "0.7"
-rocket = "0.4"
+actix-web = "4.0.0-beta.13"
+actix-files = "0.6.0-beta.9"
+config = "0.11"
+handlebars = { version = "4.1", features = ["dir_source"] }
+rand = "0.8"
+serde = { version = "1", features = ["derive"]}
+serde_json = "1"
 
-[dependencies.rocket_contrib]
-version = "0.4"
-default-features = false
-features = ["handlebars_templates", "serve"]
+[dev-dependencies]
+actix-rt = "2.5"
+reqwest = "0.11"
+tokio = "1.14"

@@ -1,13 +1,13 @@
-CARDS := The-Tarot-of-the-Silicon-Dawn
+CARDS := cards
 DAWNZIP := The-Tarot-of-the-Silicon-Dawn.zip
 
 run: $(CARDS)
-	cargo +nightly build
-	cargo +nightly run
+	cargo build
+	cargo run
 DUMMY: run
 
 build: $(CARDS)
-	cargo +nightly build --release
+	cargo build --release
 
 setup: $(CARDS)
 DUMMY: setup
