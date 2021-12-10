@@ -33,10 +33,9 @@ pub fn pick_a_card(cards: &CardDeck) -> Result<Card, String> {
     let pick = cards.choose(&mut rng);
     match pick {
         Some(p) => {
-            let text = p.replace(".jpg", "-text.png");
             Ok(Card {
                 name: p.to_string(),
-                text: text,
+                text: p.replace(".jpg", "-text.png"),
             })
         }
         None => Err("Nothing Picked!".to_string()),
