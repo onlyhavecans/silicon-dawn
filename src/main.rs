@@ -12,11 +12,14 @@ async fn main() -> std::io::Result<()> {
         .expect("No cards loaded from card directory");
     println!("Pulled {} cards from {}", cards.len(), CARD_DIRECTORY);
 
-    let configuration = get_configuration().expect("failed to read config.");
+    let configuration = get_configuration()
+        .expect("Failed to read config.");
+
     let listener = TcpListener::bind((
         configuration.application_address,
         configuration.application_port,
     ))
-    .expect("failed to bind to port");
+    .expect("Failed to bind to port");
+
     run(listener, cards)?.await
 }

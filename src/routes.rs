@@ -4,7 +4,9 @@ use handlebars::Handlebars;
 use serde_json::json;
 
 pub async fn index(hbs: web::Data<Handlebars<'_>>, deck: web::Data<CardDeck>) -> impl Responder {
-    let card = pick_a_card(deck.get_ref()).unwrap();
+    let card = pick_a_card(deck.get_ref())
+        .expect("Unable to Draw cards");
+
     let data = json![{
         "card_dir": "/cards",
         "card_name": card.name,
