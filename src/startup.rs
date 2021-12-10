@@ -1,5 +1,5 @@
 use crate::cards::CardDeck;
-use crate::routes::{index, robots};
+use crate::routes::{health_check, index, robots};
 use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
@@ -17,6 +17,7 @@ pub fn run(listener: TcpListener, deck: CardDeck) -> Result<Server, std::io::Err
     let server = HttpServer::new(move || {
         App::new()
             .service(Files::new("/cards", "./cards"))
+            .route("/healthcheck", web::get().to(health_check))
             .route("/robots.txt", web::get().to(robots))
             .route("/", web::get().to(index))
             .app_data(deck_ref.clone())

@@ -23,6 +23,21 @@ async fn health_check_works() {
 
     let client = reqwest::Client::new();
     let response = client
+        .get(&format!("http://{}/healthcheck", &test_conf.address))
+        .send()
+        .await
+        .expect("failed to execute request.");
+
+    assert!(response.status().is_success());
+    assert_eq!(Some(0), response.content_length());
+}
+
+#[actix_rt::test]
+async fn robots_txt_works() {
+    let test_conf = spawn_app().await;
+
+    let client = reqwest::Client::new();
+    let response = client
         .get(&format!("http://{}/robots.txt", &test_conf.address))
         .send()
         .await

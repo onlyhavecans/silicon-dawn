@@ -20,3 +20,7 @@ pub async fn index(hbs: web::Data<Handlebars<'_>>, deck: web::Data<CardDeck>) ->
 pub async fn robots() -> impl Responder {
     "User-agent: *\nDisallow: /"
 }
+
+pub async fn health_check() -> impl Responder {
+    HttpResponse::Ok()
+}

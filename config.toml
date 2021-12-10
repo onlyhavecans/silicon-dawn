@@ -1,2 +1,2 @@
-application_port = 8080
-application_address = "::1"
+application_port = 3200
+application_address = "127.0.0.1"
