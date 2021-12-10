@@ -16,15 +16,13 @@ pub fn get_cards(directory: &str) -> Result<CardDeck, io::Error> {
     let files = fs::read_dir(dir)?;
     let extension: &OsStr = OsStr::new("jpg");
 
-    println!("Caching card list, this takes a moment.");
+    println!("Caching card list!");
     let cards: CardDeck = files
         .filter(|x| x.is_ok())
         .map(|x| x.unwrap())
         .filter(|x| x.path().extension() == Some(extension) )
         .map(|x| x.file_name().into_string().unwrap())
         .collect();
-
-    println!("Successfully pulled {} cards into the cache.", cards.len());
     Ok(cards)
 }
 
