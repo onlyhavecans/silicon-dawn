@@ -5,22 +5,6 @@ use std::net::TcpListener;
 
 const CARD_DIRECTORY: &str = "cards";
 
-// #[get("/")]
-// fn draw_card(state: State<SharedCardList>) -> Result<Template, Status> {
-//     let mut rng = thread_rng();
-//
-//     if let Some(pick) = state.cards.choose(&mut rng) {
-//         let card_text = &pick.replace(".jpg", "-text.png");
-//         let mut context = HashMap::new();
-//         context.insert("card_dir", CARD_URI);
-//         context.insert("card_name", pick);
-//         context.insert("card_text", card_text);
-//         Ok(Template::render("index", &context))
-//     } else {
-//         Err(Status::InternalServerError)
-//     }
-// }
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let cards = get_cards(CARD_DIRECTORY)?;
