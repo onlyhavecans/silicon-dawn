@@ -1,8 +1,8 @@
+use log::info;
 use silicon_dawn::cards::get_cards;
 use silicon_dawn::configuration::get_configuration;
 use silicon_dawn::startup::run;
 use std::net::TcpListener;
-use log::info;
 
 const CARD_DIRECTORY: &str = "cards";
 
