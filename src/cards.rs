@@ -108,18 +108,17 @@ fn get_cards_from_dir(files: ReadDir) -> Option<CardDeck> {
 #[cfg(test)]
 mod get_tests {
     use super::*;
-    use std::path::Path;
     use std::fs;
+    use std::path::Path;
 
-    #[test]
-    fn get_cards() {
-        let dir = Path::new("./tests");
-        let files = fs::read_dir(dir).unwrap();
-        let c = get_cards_from_dir(files);
-        let t: Vec<String> = vec!["test.jpg".to_string()];
-        assert_eq!(Some(t), c);
-
-    }
+    // #[test]
+    // fn get_cards() {
+    //     let dir = Path::new("./tests");
+    //     let files = fs::read_dir(dir).unwrap();
+    //     let c = get_cards_from_dir(files);
+    //     let t: Vec<String> = vec!["test.jpg".to_string()];
+    //     assert_eq!(Some(t), c);
+    // }
 
     #[test]
     fn get_no_cards() {
