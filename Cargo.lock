@@ -25,19 +25,19 @@ version = "0.6.0-beta.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "84080179cb878e592ebba0e5194a0eb890dfb37b4f956710e51db6d4d8e18abb"
 dependencies = [
-    "actix-http",
-    "actix-service",
-    "actix-utils",
-    "actix-web",
-    "askama_escape",
-    "bitflags",
-    "bytes",
-    "derive_more",
-    "futures-core",
-    "http-range",
-    "log",
-    "mime",
-    "mime_guess",
+ "actix-http",
+ "actix-service",
+ "actix-utils",
+ "actix-web",
+ "askama_escape",
+ "bitflags",
+ "bytes",
+ "derive_more",
+ "futures-core",
+ "http-range",
+ "log",
+ "mime",
+ "mime_guess",
  "percent-encoding",
  "pin-project-lite",
 ]
@@ -48,15 +48,15 @@ version = "3.0.0-beta.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a1ff7b149cc1b99967c22cb81c2c31f128ac88ed12bbf80c29c55a7511d46edb"
 dependencies = [
-    "actix-codec",
-    "actix-rt",
-    "actix-service",
-    "actix-utils",
-    "ahash",
-    "base64",
-    "bitflags",
-    "brotli2",
-    "bytes",
+ "actix-codec",
+ "actix-rt",
+ "actix-service",
+ "actix-utils",
+ "ahash",
+ "base64",
+ "bitflags",
+ "brotli2",
+ "bytes",
  "bytestring",
  "derive_more",
  "encoding_rs",
@@ -161,15 +161,15 @@ version = "4.0.0-beta.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9387ea044357f12b606b8fad0652d3804ba498954f66ae5c677236cb0bd47db4"
 dependencies = [
-    "actix-codec",
-    "actix-http",
-    "actix-macros",
-    "actix-router",
-    "actix-rt",
-    "actix-server",
-    "actix-service",
-    "actix-utils",
-    "actix-web-codegen",
+ "actix-codec",
+ "actix-http",
+ "actix-macros",
+ "actix-router",
+ "actix-rt",
+ "actix-server",
+ "actix-service",
+ "actix-utils",
+ "actix-web-codegen",
  "ahash",
  "bytes",
  "cfg-if",
@@ -202,10 +202,10 @@ version = "0.5.0-beta.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "30a90b7f6c2fde9a1fe3df4da758c2c3c9d620dfa3eae4da0b6925dc0a13444a"
 dependencies = [
-    "actix-router",
-    "proc-macro2",
-    "quote",
-    "syn",
+ "actix-router",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

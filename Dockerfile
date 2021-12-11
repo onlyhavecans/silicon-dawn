@@ -1,10 +1,22 @@
-FROM rust:1.57 as builder
+FROM lukemathwalker/cargo-chef:latest-rust-1.57 as chef
 WORKDIR /usr/src/myapp
+
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare  --recipe-path recipe.json
+
+
+FROM chef as builder
+WORKDIR /usr/src/myapp
+COPY --from=planner /usr/src/myapp/recipe.json recipe.json
+# Build dependencies - this is the caching Docker layer!
+RUN cargo chef cook --release --recipe-path recipe.json
+# Build application
 COPY . .
 
 RUN cargo install --path .
 
-FROM debian:buster-slim
+FROM debian:buster-slim as production
 EXPOSE 3200/tcp
 
 ENV USER=appuser
