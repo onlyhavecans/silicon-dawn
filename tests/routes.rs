@@ -12,7 +12,7 @@ async fn spawn_app() -> TestApp {
 
     let deck: CardDeck = vec!["title.jpg".to_string()];
 
-    let server = run(listener, deck.clone()).expect("failed to bind address");
+    let server = run(listener, deck).expect("failed to bind address");
     let _ = tokio::spawn(server);
     TestApp { address }
 }

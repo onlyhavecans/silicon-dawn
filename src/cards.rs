@@ -8,11 +8,18 @@ use std::path::Path;
 pub type CardDeck = Vec<String>;
 
 pub struct Card {
-    pub name: String,
-    pub text: String,
+    name: String,
+    text: String,
 }
 
 impl Card {
+    pub fn new(file_name: &str) -> Self {
+        Card {
+            name: file_name.to_string(),
+            text: file_name.replace(".jpg", "-text.png"),
+        }
+    }
+
     pub fn encoded_name(&self) -> String {
         urlencoding::encode(self.name.as_str()).to_string()
     }
@@ -36,10 +43,7 @@ pub fn get_cards(directory: &str) -> Option<CardDeck> {
 pub fn pick_a_card(cards: &[String]) -> Option<Card> {
     let mut rng = thread_rng();
     let pick = cards.choose(&mut rng);
-    pick.map(|p| Card {
-        name: p.to_string(),
-        text: p.replace(".jpg", "-text.png"),
-    })
+    pick.map(|p| Card::new(p))
 }
 
 fn get_cards_from_dir(files: ReadDir) -> CardDeck {
