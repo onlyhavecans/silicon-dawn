@@ -10,9 +10,18 @@ If you want the original Python code it is buried in the git history.
 Pythonista isn't the BEST experience I found, so I wrote a web daemon you can compile it and run it wherever you want.
 Because everything is better as a web page (?question mark?)
 
+### Docker
+
+I publish the docker container at [DockerHub](https://hub.docker.com/r/skwrl/silicon-dawn).
+It is fully self-contained and uses port 3200 internally.
+
+You can spin up a copy however you choose to do a docker or `make docker-run` to build and deploy locally
+
+### Local Binary
+
 1. [install rust](https://rustup.rs)
-1. `make` to run the dev daemon
-1. Browse to http://localhost:3200 to enjoy your pick
-1. Refresh the page for a fresh pick
+3. `make local-run` to download cards, compile, and go!
+4. Browse to http://localhost:3200 to enjoy your pick
+5. Refresh the page for a fresh pick
 
 Or! if you are super lazy check out [my hosted copy of this](https://silicon-dawn.cards).

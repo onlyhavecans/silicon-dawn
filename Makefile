@@ -16,17 +16,16 @@ test:
 docker-build: $(CARDS)
 	docker build -t $(IMAGE) .
 
-docker-run: build
+docker-run: docker-build
 	docker run -p 8080:3200 --name Makefile-Dawn $(IMAGE)
 
-push: build
+push: docker-build
 	docker push $(IMAGE)
 
 $(BIN):
 	cargo build --release
 
 local-run: $(CARDS) $(BIN)
-	cargo build
 	cargo run
 
 setup: $(CARDS)
