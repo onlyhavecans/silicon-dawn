@@ -35,11 +35,10 @@ pub fn pick_a_card(cards: &[String]) -> Option<Card> {
 fn get_cards_from_dir(files: ReadDir) -> CardDeck {
     let extension: &OsStr = OsStr::new("jpg");
 
-    let cards: CardDeck = files
+    files
         .filter(|x| x.is_ok())
         .map(|x| x.unwrap())
         .filter(|x| x.path().extension() == Some(extension))
         .map(|x| x.file_name().into_string().unwrap())
-        .collect();
-    cards
+        .collect()
 }
