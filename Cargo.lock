@@ -1573,16 +1573,17 @@ version = "0.3.0"
 dependencies = [
  "actix-files",
  "actix-rt",
- "actix-web",
- "config",
- "env_logger",
- "handlebars",
- "log",
- "rand",
- "reqwest",
- "serde 1.0.131",
- "serde_json",
- "tokio",
+    "actix-web",
+    "config",
+    "env_logger",
+    "handlebars",
+    "log",
+    "rand",
+    "reqwest",
+    "serde 1.0.131",
+    "serde_json",
+    "tokio",
+    "urlencoding",
 ]
 
 [[package]]
@@ -1899,11 +1900,17 @@ version = "2.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a507c383b2d33b5fc35d1861e77e6b383d158b2da5e14fe51b83dfedf6fd578c"
 dependencies = [
- "form_urlencoded",
- "idna",
- "matches",
- "percent-encoding",
+    "form_urlencoded",
+    "idna",
+    "matches",
+    "percent-encoding",
 ]
+
+[[package]]
+name = "urlencoding"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68b90931029ab9b034b300b797048cf23723400aa757e8a2bfb9d748102f9821"
 
 [[package]]
 name = "vcpkg"

@@ -8,8 +8,8 @@ pub async fn index(hbs: web::Data<Handlebars<'_>>, deck: web::Data<CardDeck>) ->
 
     let data = json![{
         "card_dir": "/cards",
-        "card_name": card.name,
-        "card_text": card.text,
+        "card_name": card.encoded_name(),
+        "card_text": card.encoded_text(),
     }];
     let body = hbs.render("index", &data);
     match body {

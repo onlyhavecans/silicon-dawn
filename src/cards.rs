@@ -12,6 +12,16 @@ pub struct Card {
     pub text: String,
 }
 
+impl Card {
+    pub fn encoded_name(&self) -> String {
+        urlencoding::encode(self.name.as_str()).to_string()
+    }
+
+    pub fn encoded_text(&self) -> String {
+        urlencoding::encode(self.text.as_str()).to_string()
+    }
+}
+
 pub fn get_cards(directory: &str) -> Option<CardDeck> {
     let dir = Path::new(directory);
     let files = fs::read_dir(dir).ok()?;
