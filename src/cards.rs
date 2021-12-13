@@ -30,9 +30,40 @@ impl Card {
     }
 }
 
+pub fn get_cards(directory: &str) -> Option<CardDeck> {
+    let dir = Path::new(directory);
+    let files = fs::read_dir(dir).ok()?;
+
+    get_cards_from_dir(files)
+}
+
+pub fn pick_a_card(cards: &[String]) -> Option<Card> {
+    let mut rng = thread_rng();
+    let pick = cards.choose(&mut rng);
+    pick.map(|p| Card::new(p))
+}
+
+fn get_cards_from_dir(files: ReadDir) -> Option<CardDeck> {
+    let extension: &OsStr = OsStr::new("jpg");
+
+    let cards: CardDeck = files
+        .filter(|x| x.is_ok())
+        .map(|x| x.unwrap())
+        .filter(|x| x.path().extension() == Some(extension))
+        .map(|x| x.file_name().into_string().unwrap())
+        .collect();
+
+    match cards.is_empty() {
+        true => None,
+        false => Some(cards),
+    }
+}
+
 #[cfg(test)]
-mod card_tests {
+mod tests {
     use super::*;
+    use std::fs;
+    use std::path::Path;
 
     #[test]
     fn card_default() {
@@ -54,24 +85,6 @@ mod card_tests {
         assert_eq!("bad", c.encoded_name());
         assert_eq!("bad", c.encoded_text());
     }
-}
-
-pub fn get_cards(directory: &str) -> Option<CardDeck> {
-    let dir = Path::new(directory);
-    let files = fs::read_dir(dir).ok()?;
-
-    get_cards_from_dir(files)
-}
-
-pub fn pick_a_card(cards: &[String]) -> Option<Card> {
-    let mut rng = thread_rng();
-    let pick = cards.choose(&mut rng);
-    pick.map(|p| Card::new(p))
-}
-
-#[cfg(test)]
-mod pick_tests {
-    use super::*;
 
     #[test]
     fn pick_single_card() {
@@ -87,29 +100,6 @@ mod pick_tests {
         let r = pick_a_card(&d);
         assert_eq!(None, r)
     }
-}
-
-fn get_cards_from_dir(files: ReadDir) -> Option<CardDeck> {
-    let extension: &OsStr = OsStr::new("jpg");
-
-    let cards: CardDeck = files
-        .filter(|x| x.is_ok())
-        .map(|x| x.unwrap())
-        .filter(|x| x.path().extension() == Some(extension))
-        .map(|x| x.file_name().into_string().unwrap())
-        .collect();
-
-    match cards.is_empty() {
-        true => None,
-        false => Some(cards),
-    }
-}
-
-#[cfg(test)]
-mod get_tests {
-    use super::*;
-    use std::fs;
-    use std::path::Path;
 
     // #[test]
     // fn get_cards() {
