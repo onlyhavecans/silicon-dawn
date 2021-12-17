@@ -24,5 +24,3 @@ jobs:
         run: cargo clippy -- -D warnings
       - name: Run RustFmt
         run: cargo fmt -- --check
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag skwrl/silicon-dawn:latest
