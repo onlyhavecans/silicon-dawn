@@ -12,7 +12,8 @@ async fn spawn_app() -> TestApp {
 
     let deck: CardDeck = vec!["title.jpg".to_string()];
 
-    let server = run(listener, deck).expect("failed to bind address");
+    let path = "tests/test_files";
+    let server = run(listener, deck, path).expect("failed to bind address");
     let _ = tokio::spawn(server);
     TestApp { address }
 }
@@ -65,7 +66,7 @@ async fn cards_works() {
 
     let response = client
         .get(&format!(
-            "http://{}/cards/card-back.jpg",
+            "http://{}/cards/test-back.png",
             &test_conf.address
         ))
         .send()
@@ -73,7 +74,7 @@ async fn cards_works() {
         .expect("failed to execute request.");
 
     assert!(response.status().is_success());
-    assert_eq!(Some(1022837), response.content_length());
+    assert_eq!(Some(1953991), response.content_length());
 }
 
 #[actix_rt::test]

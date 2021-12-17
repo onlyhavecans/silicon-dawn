@@ -22,5 +22,5 @@ async fn main() -> std::io::Result<()> {
     ))
     .expect("Failed to bind to port");
 
-    run(listener, cards)?.await
+    run(listener, cards, CARD_DIRECTORY)?.await
 }
