@@ -98,7 +98,7 @@ mod tests {
     fn pick_no_card() {
         let d: Vec<String> = Vec::new();
         let r = pick_a_card(&d);
-        assert_eq!(None, r)
+        assert_eq!(None, r);
     }
 
     #[test]

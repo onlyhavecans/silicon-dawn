@@ -17,7 +17,7 @@ docker-build: $(CARDS)
 	docker build -t $(IMAGE) .
 
 docker-run: docker-build
-	docker run -p 8080:3200 --name Makefile-Dawn $(IMAGE)
+	docker run --rm -p 8080:3200 --name Makefile-Dawn $(IMAGE)
 
 push: docker-build
 	docker push $(IMAGE)

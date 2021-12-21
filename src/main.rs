@@ -4,15 +4,15 @@ use silicon_dawn::configuration::get_configuration;
 use silicon_dawn::startup::run;
 use std::net::TcpListener;
 
-const CARD_DIRECTORY: &str = "cards";
+const DECK_DIRECTORY: &str = "cards";
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
     info!("Cashing card list");
-    let cards = get_cards(CARD_DIRECTORY).expect("No cards loaded from card directory");
-    info!("Pulled {} cards from {}", cards.len(), CARD_DIRECTORY);
+    let cards = get_cards(DECK_DIRECTORY).expect("No cards loaded from card directory");
+    info!("Pulled {} cards from {}", cards.len(), DECK_DIRECTORY);
 
     let configuration = get_configuration().expect("Failed to read config.");
 
@@ -22,5 +22,5 @@ async fn main() -> std::io::Result<()> {
     ))
     .expect("Failed to bind to port");
 
-    run(listener, cards, CARD_DIRECTORY)?.await
+    run(listener, cards, DECK_DIRECTORY)?.await
 }
