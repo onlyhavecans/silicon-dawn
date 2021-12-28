@@ -7,11 +7,6 @@ use actix_web::{web, App, HttpServer};
 use handlebars::Handlebars;
 use std::net::TcpListener;
 
-#[derive(Debug)]
-enum RunError {
-
-}
-
 pub fn run(
     listener: TcpListener,
     deck: CardDeck,
