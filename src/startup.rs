@@ -15,7 +15,7 @@ pub fn run(
     let mut handlebars = Handlebars::new();
     handlebars
         .register_templates_directory(".hbs", "./templates")
-        .unwrap();
+        .expect("Unable to load templates");
     let handlebars_ref = web::Data::new(handlebars);
 
     let deck_ref = web::Data::new(deck);

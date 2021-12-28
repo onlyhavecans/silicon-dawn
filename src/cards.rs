@@ -104,7 +104,7 @@ mod tests {
     #[test]
     fn get_cards() {
         let dir = Path::new("./tests/test_files");
-        let files = fs::read_dir(dir).unwrap();
+        let files = fs::read_dir(dir).expect("Unable to read directory");
         let c = get_cards_from_dir(files);
         let t: Vec<String> = vec!["test.jpg".to_string()];
         assert_eq!(Some(t), c);
@@ -113,7 +113,7 @@ mod tests {
     #[test]
     fn get_no_cards() {
         let dir = Path::new(".");
-        let files = fs::read_dir(dir).unwrap();
+        let files = fs::read_dir(dir).expect("Unable to read directory");
         let c = get_cards_from_dir(files);
         assert_eq!(None, c);
     }
