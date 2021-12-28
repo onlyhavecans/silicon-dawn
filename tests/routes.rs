@@ -18,7 +18,7 @@ async fn spawn_app() -> TestApp {
     TestApp { address }
 }
 
-#[actix_rt::test]
+#[tokio::test]
 async fn health_check_works() {
     let test_conf = spawn_app().await;
 
@@ -33,7 +33,7 @@ async fn health_check_works() {
     assert_eq!(Some(0), response.content_length());
 }
 
-#[actix_rt::test]
+#[tokio::test]
 async fn robots_txt_works() {
     let test_conf = spawn_app().await;
 
@@ -51,7 +51,7 @@ async fn robots_txt_works() {
     assert_eq!("User-agent: *\nDisallow: /", body);
 }
 
-#[actix_rt::test]
+#[tokio::test]
 async fn cards_works() {
     let test_conf = spawn_app().await;
 
@@ -77,7 +77,7 @@ async fn cards_works() {
     assert_eq!(Some(1953991), response.content_length());
 }
 
-#[actix_rt::test]
+#[tokio::test]
 async fn index_works() {
     let test_conf = spawn_app().await;
 

@@ -6,7 +6,7 @@ use std::net::TcpListener;
 
 const DECK_DIRECTORY: &str = "cards";
 
-#[actix_web::main]
+#[tokio::main]
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
