@@ -7,7 +7,6 @@ RUN cargo chef prepare  --recipe-path recipe.json
 
 
 FROM chef as builder
-WORKDIR /usr/src/myapp
 COPY --from=planner /usr/src/myapp/recipe.json recipe.json
 # Build dependencies - this is the caching Docker layer!
 RUN cargo chef cook --release --recipe-path recipe.json
@@ -16,7 +15,7 @@ COPY . .
 
 RUN cargo install --path .
 
-FROM debian:buster-slim as production
+FROM debian:bullseye-slim as production
 EXPOSE 3200/tcp
 
 ENV USER=appuser
