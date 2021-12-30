@@ -24,7 +24,7 @@ async fn health_check_works() {
 
     let client = reqwest::Client::new();
     let response = client
-        .get(&format!("http://{}/healthcheck", &test_conf.address))
+        .get(&format!("http://{}/health_check", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");

@@ -5,8 +5,8 @@ use serde_json::json;
 
 pub async fn index(hbs: web::Data<Handlebars<'_>>, deck: web::Data<CardDeck>) -> impl Responder {
     let card = match pick_a_card(deck.get_ref()) {
-        Ok(card) => card,
-        Err(_) => return HttpResponse::InternalServerError().finish(),
+        Some(card) => card,
+        None => return HttpResponse::InternalServerError().finish(),
     };
 
     let data = json![{

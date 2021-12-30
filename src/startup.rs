@@ -26,7 +26,7 @@ pub fn run(
         App::new()
             .wrap(Logger::default())
             .service(Files::new("/cards", deck_path.as_str()))
-            .route("/healthcheck", web::get().to(health_check))
+            .route("/health_check", web::get().to(health_check))
             .route("/robots.txt", web::get().to(robots))
             .route("/", web::get().to(index))
             .app_data(deck_ref.clone())
