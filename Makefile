@@ -19,7 +19,7 @@ docker-build: $(CARDS)
 docker-run: docker-build
 	docker run --rm -p 8080:3200 --name Makefile-Dawn $(IMAGE)
 
-push: docker-build
+push: test docker-build
 	docker push $(IMAGE)
 
 $(BIN):
