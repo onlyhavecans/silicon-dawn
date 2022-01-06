@@ -27,7 +27,6 @@ RUN adduser \
     --uid "$UID" \
     "$USER"
 
-COPY templates /templates
 COPY cards /cards
 COPY config.toml /
 COPY --from=builder /usr/local/cargo/bin/silicon-dawn /usr/local/bin/silicon-dawn

@@ -4,7 +4,6 @@ use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::middleware::Logger;
 use actix_web::{web, App, HttpServer};
-use handlebars::Handlebars;
 use std::net::TcpListener;
 
 pub fn run(
@@ -12,12 +11,6 @@ pub fn run(
     deck: CardDeck,
     serve_from: &str,
 ) -> Result<Server, std::io::Error> {
-    let mut handlebars = Handlebars::new();
-    handlebars
-        .register_templates_directory(".hbs", "./templates")
-        .expect("Unable to load templates");
-    let handlebars_ref = web::Data::new(handlebars);
-
     let deck_ref = web::Data::new(deck);
 
     let deck_path = format!("./{}", serve_from);
@@ -30,7 +23,6 @@ pub fn run(
             .route("/robots.txt", web::get().to(robots))
             .route("/", web::get().to(index))
             .app_data(deck_ref.clone())
-            .app_data(handlebars_ref.clone())
     })
     .listen(listener)?
     .run();
