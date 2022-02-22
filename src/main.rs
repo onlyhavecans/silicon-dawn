@@ -1,6 +1,6 @@
 use log::info;
 use silicon_dawn::cards::get_cards;
-use silicon_dawn::configuration::get_configuration;
+use silicon_dawn::configuration::Settings;
 use silicon_dawn::startup::run;
 use std::net::TcpListener;
 
@@ -14,7 +14,7 @@ async fn main() -> std::io::Result<()> {
     let cards = get_cards(DECK_DIRECTORY).expect("No cards loaded from card directory");
     info!("Pulled {} cards from {}", cards.len(), DECK_DIRECTORY);
 
-    let configuration = get_configuration().expect("Failed to read config.");
+    let configuration = Settings::new().expect("Failed to read config.");
 
     let listener = TcpListener::bind((
         configuration.application_address,
