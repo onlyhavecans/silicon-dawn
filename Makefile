@@ -37,4 +37,4 @@ $(CARDS): $(DAWNZIP)
 	unzip -oj $(DAWNZIP) -x "__MACOSX/*" "*/sand-home*" -d $(CARDS)
 
 clean:
-	@rm -rf ./target
+	cargo clean
