@@ -1,2 +1,6 @@
 *.zip
 /target
+.github
+.idea
+.vscode
+.git
