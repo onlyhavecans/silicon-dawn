@@ -3,15 +3,15 @@ CARDS := cards
 BIN := ./target/release/silicon-dawn
 DAWNZIP := The-Tarot-of-the-Silicon-Dawn.zip
 
-all: update test docker-run
+all: test docker-run
 
 update:
 	cargo update
 
 test:
-	cargo test
-	cargo clippy -- -D warnings
 	cargo fmt -- --check
+	cargo clippy -- -D warnings
+	cargo test
 
 docker-build: $(CARDS)
 	docker build -t $(IMAGE) .
@@ -19,7 +19,7 @@ docker-build: $(CARDS)
 docker-run: docker-build
 	docker run --rm -p 8080:3200 --name Makefile-Dawn $(IMAGE)
 
-push: test docker-build
+push:
 	docker push $(IMAGE)
 
 $(BIN):
