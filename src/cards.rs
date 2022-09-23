@@ -16,17 +16,17 @@ pub struct Card {
 impl Card {
     pub fn new(file_name: &str) -> Self {
         Card {
-            name: file_name.to_string(),
+            name: file_name.into(),
             text: file_name.replace(".jpg", "-text.png"),
         }
     }
 
     pub fn encoded_name(&self) -> String {
-        urlencoding::encode(self.name.as_str()).to_string()
+        urlencoding::encode(&*self.name).into()
     }
 
     pub fn encoded_text(&self) -> String {
-        urlencoding::encode(self.text.as_str()).to_string()
+        urlencoding::encode(&*self.text).into()
     }
 }
 
@@ -47,10 +47,9 @@ fn get_cards_from_dir(files: ReadDir) -> Option<CardDeck> {
     let extension: &OsStr = OsStr::new("jpg");
 
     let cards: CardDeck = files
-        .filter(|x| x.is_ok())
-        .map(|x| x.unwrap())
+        .filter_map(|x| x.ok())
         .filter(|x| x.path().extension() == Some(extension))
-        .map(|x| x.file_name().into_string().unwrap())
+        .filter_map(|x| x.file_name().into_string().ok())
         .collect();
 
     match cards.is_empty() {
