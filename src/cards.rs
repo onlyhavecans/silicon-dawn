@@ -22,11 +22,11 @@ impl Card {
     }
 
     pub fn encoded_name(&self) -> String {
-        urlencoding::encode(&*self.name).into()
+        urlencoding::encode(&self.name).into()
     }
 
     pub fn encoded_text(&self) -> String {
-        urlencoding::encode(&*self.text).into()
+        urlencoding::encode(&self.text).into()
     }
 }
 
