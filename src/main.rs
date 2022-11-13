@@ -10,7 +10,7 @@ const DECK_DIRECTORY: &str = "cards";
 async fn main() -> std::io::Result<()> {
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
-    info!("Cashing card list");
+    info!("Caching card list");
     let cards = get_cards(DECK_DIRECTORY).expect("No cards loaded from card directory");
     info!("Pulled {} cards from {}", cards.len(), DECK_DIRECTORY);
 

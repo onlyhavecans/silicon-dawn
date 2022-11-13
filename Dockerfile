@@ -1,4 +1,4 @@
-FROM lukemathwalker/cargo-chef:latest-rust-1.64 as chef
+FROM lukemathwalker/cargo-chef:latest-rust-1.65 as chef
 WORKDIR /usr/src/myapp
 
 FROM chef AS planner
@@ -15,23 +15,14 @@ COPY . .
 
 RUN cargo install --path .
 
-FROM debian:bullseye-slim as production
+FROM gcr.io/distroless/cc as production
 EXPOSE 3200/tcp
-
-ENV USER=appuser
-ENV UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --no-create-home \
-    --uid "$UID" \
-    "$USER"
 
 COPY cards /cards
 COPY config.toml /
 COPY --from=builder /usr/local/cargo/bin/silicon-dawn /usr/local/bin/silicon-dawn
 
-USER appuser
+USER nonroot
 
 CMD ["/usr/local/bin/silicon-dawn"]
 
