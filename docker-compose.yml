@@ -1,8 +1,7 @@
-version: "3.8"
-
 services:
   silicon-dawn:
     image: skwrl/silicon-dawn:latest
+    container_name: silicon-dawn
     restart: always
     ports:
-      - "3200:3200"
+      - "127.0.0.1:3200:3200"

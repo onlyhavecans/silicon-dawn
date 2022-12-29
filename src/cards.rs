@@ -21,15 +21,18 @@ impl Card {
         }
     }
 
+    /// Returns the encoded name of this [`Card`].
     pub fn encoded_name(&self) -> String {
         urlencoding::encode(&self.name).into()
     }
 
+    /// Returns the encoded text of this [`Card`].
     pub fn encoded_text(&self) -> String {
         urlencoding::encode(&self.text).into()
     }
 }
 
+/// Returns a CardDeck from a directory.
 pub fn get_cards(directory: &str) -> Option<CardDeck> {
     let dir = Path::new(directory);
     let files = fs::read_dir(dir).ok()?;
