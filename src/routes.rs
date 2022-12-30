@@ -10,6 +10,7 @@ struct IndexTemplate<'a> {
     card_text: &'a str,
 }
 
+/// Draw and return cards on every index page load
 pub async fn index(deck: web::Data<CardDeck>) -> impl Responder {
     let card = match pick_a_card(deck.get_ref()) {
         Some(card) => card,
@@ -31,10 +32,12 @@ pub async fn index(deck: web::Data<CardDeck>) -> impl Responder {
     }
 }
 
+/// Hardcoded robots to discourage those who still respect it
 pub async fn robots() -> impl Responder {
     "User-agent: *\nDisallow: /"
 }
 
+/// Very basic healthcheck for being in a container or test
 pub async fn health_check() -> impl Responder {
     HttpResponse::Ok()
 }

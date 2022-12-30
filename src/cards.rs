@@ -46,6 +46,7 @@ pub fn pick_a_card(cards: &[String]) -> Option<Card> {
     pick.map(|p| Card::new(p))
 }
 
+/// Returns all files ending in jpg as a card deck
 fn get_cards_from_dir(files: ReadDir) -> Option<CardDeck> {
     let extension: &OsStr = OsStr::new("jpg");
 
