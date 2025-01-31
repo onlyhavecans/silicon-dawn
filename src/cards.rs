@@ -1,5 +1,5 @@
-use rand::seq::SliceRandom;
-use rand::thread_rng;
+use rand::rng;
+use rand::seq::IndexedRandom;
 use std::ffi::OsStr;
 use std::fs;
 use std::fs::ReadDir;
@@ -41,7 +41,7 @@ pub fn get_cards(directory: &str) -> Option<CardDeck> {
 }
 
 pub fn pick_a_card(cards: &[String]) -> Option<Card> {
-    let mut rng = thread_rng();
+    let mut rng = rng();
     let pick = cards.choose(&mut rng);
     pick.map(|p| Card::new(p))
 }
