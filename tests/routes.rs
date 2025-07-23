@@ -14,7 +14,7 @@ async fn spawn_app() -> TestApp {
 
     let path = "tests/test_files";
     let server = run(listener, deck, path).expect("failed to bind address");
-    let _ = tokio::spawn(server);
+    let _server_handle = tokio::spawn(server);
     TestApp { address }
 }
 
