@@ -24,7 +24,7 @@ async fn health_check_works() {
 
     let client = reqwest::Client::new();
     let response = client
-        .get(&format!("http://{}/health_check", &test_conf.address))
+        .get(format!("http://{}/health_check", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");
@@ -39,7 +39,7 @@ async fn robots_txt_works() {
 
     let client = reqwest::Client::new();
     let response = client
-        .get(&format!("http://{}/robots.txt", &test_conf.address))
+        .get(format!("http://{}/robots.txt", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");
@@ -57,7 +57,7 @@ async fn cards_works() {
 
     let client = reqwest::Client::new();
     let response = client
-        .get(&format!("http://{}/cards/", &test_conf.address))
+        .get(format!("http://{}/cards/", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");
@@ -65,10 +65,7 @@ async fn cards_works() {
     assert_eq!(404, response.status().as_u16());
 
     let response = client
-        .get(&format!(
-            "http://{}/cards/test-back.png",
-            &test_conf.address
-        ))
+        .get(format!("http://{}/cards/test-back.png", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");
@@ -83,7 +80,7 @@ async fn index_works() {
 
     let client = reqwest::Client::new();
     let response = client
-        .get(&format!("http://{}/", &test_conf.address))
+        .get(format!("http://{}/", &test_conf.address))
         .send()
         .await
         .expect("failed to execute request.");

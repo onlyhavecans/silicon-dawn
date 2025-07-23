@@ -13,7 +13,7 @@ pub fn run(
 ) -> Result<Server, std::io::Error> {
     let deck_ref = web::Data::new(deck);
 
-    let deck_path = format!("./{}", serve_from);
+    let deck_path = format!("./{serve_from}");
 
     let server = HttpServer::new(move || {
         App::new()
