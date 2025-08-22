@@ -3,7 +3,7 @@ use crate::routes::{health_check, index, robots};
 use actix_files::Files;
 use actix_web::dev::Server;
 use actix_web::middleware::Logger;
-use actix_web::{web, App, HttpServer};
+use actix_web::{App, HttpServer, web};
 use std::net::TcpListener;
 
 pub fn run(

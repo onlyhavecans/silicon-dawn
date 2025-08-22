@@ -1,5 +1,5 @@
-use crate::cards::{pick_a_card, CardDeck};
-use actix_web::{web, HttpResponse, Responder};
+use crate::cards::{CardDeck, pick_a_card};
+use actix_web::{HttpResponse, Responder, web};
 use askama::Template;
 
 #[derive(Template)]
