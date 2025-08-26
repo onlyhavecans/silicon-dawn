@@ -1,5 +1,4 @@
-name: Rust
-
+---
 on:
   push:
     branches: [main]
@@ -14,8 +13,11 @@ jobs:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - uses: https://github.com/dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
 
       - name: Get cargo version
         run: cargo --version
@@ -26,8 +28,11 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - uses: https://github.com/dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
 
       - name: Cache dependencies
         uses: actions/cache@v4
@@ -47,8 +52,10 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - uses: https://github.com/dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
 
       - name: Cache dependencies
         uses: actions/cache@v4
