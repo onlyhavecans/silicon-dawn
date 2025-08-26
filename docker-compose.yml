@@ -1,7 +1,0 @@
-services:
-  silicon-dawn:
-    image: skwrl/silicon-dawn:latest@sha256:4ee9fbfddec4082ceb787bb4df8281ce67ece6aaeae2f03fd32411b2d6036561
-    container_name: silicon-dawn
-    restart: always
-    ports:
-      - "127.0.0.1:3200:3200"
