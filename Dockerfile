@@ -1,4 +1,4 @@
-FROM lukemathwalker/cargo-chef:latest-rust-1.75@sha256:49a8981fbfa9a024b4d1824a40b66bf84d23f087e70751a4de07cac0c53f3882 as chef
+FROM lukemathwalker/cargo-chef:latest-rust-1.89 AS chef
 WORKDIR /usr/src/myapp
 
 FROM chef AS planner
@@ -6,7 +6,7 @@ COPY . .
 RUN cargo chef prepare  --recipe-path recipe.json
 
 
-FROM chef as builder
+FROM chef AS builder
 COPY --from=planner /usr/src/myapp/recipe.json recipe.json
 # Build dependencies - this is the caching Docker layer!
 RUN cargo chef cook --release --recipe-path recipe.json
@@ -15,7 +15,7 @@ COPY . .
 
 RUN cargo install --path .
 
-FROM gcr.io/distroless/cc-debian11@sha256:55a5e011b2c4246b4c51e01fcc2b452d151e03df052e357465f0392fcd59fddf as production
+FROM gcr.io/distroless/cc-debian12:latest AS production
 EXPOSE 3200/tcp
 
 COPY cards /cards
