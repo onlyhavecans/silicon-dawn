@@ -15,7 +15,7 @@ COPY . .
 
 RUN cargo install --path .
 
-FROM gcr.io/distroless/cc-debian12:latest@sha256:72344f7f909a8bf003c67f55687e6d51a441b49661af8f660aa7b285f00e57df AS production
+FROM gcr.io/distroless/cc-debian12:latest@sha256:329e54034ce498f9c6b345044e8f530c6691f99e94a92446f68c0adf9baa8464 AS production
 EXPOSE 3200/tcp
 
 COPY cards /cards
