@@ -1,4 +1,4 @@
-FROM lukemathwalker/cargo-chef:latest-rust-1.96
+FROM lukemathwalker/cargo-chef:latest-rust-1.96@sha256:e606721f52d95169364bf39cae726a94ed8b397625011ccfaa8340db488b823b
 WORKDIR /usr/src/myapp
 
 FROM chef AS planner
@@ -15,7 +15,7 @@ COPY . .
 
 RUN cargo install --path .
 
-FROM gcr.io/distroless/cc-debian13:latest
+FROM gcr.io/distroless/cc-debian13:latest@sha256:a017e74bd2a12d98342dbecd33d121d2b160415ed777573dc1808969e989d94d
 EXPOSE 3200/tcp
 
 COPY cards /cards
